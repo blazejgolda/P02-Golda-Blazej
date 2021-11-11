@@ -1,6 +1,6 @@
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
+#include <iostream>             // dodanie bibliotek dla poprawnego działania programu
+#include <stdlib.h>           
+#include <time.h>                   
 using namespace std;
 int main()
 {
