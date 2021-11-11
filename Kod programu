@@ -1,10 +1,13 @@
 #include <iostream> // dodanie bibliotek dla poprawnego dzialania programu
 #include <stdlib.h>
 #include <time.h>
+#include <fstream>
 using namespace std;
 
 void wyszukiwanie_podciagow_malejacych()
 {
+    fstream plik;
+    plik.open("wizytowka.txt", ios::out);
     int i, j=2, N, t=1, l, liczba;
     srand(time(NULL));
     cout<<"Podaj ilosc elementow tablicy:";
@@ -13,8 +16,10 @@ void wyszukiwanie_podciagow_malejacych()
     for(i=0;i<N;i++)
     {
         cout<<"a["<<i+1<<"]: ";
+        plik<<"a["<<i+1<<"]: ";
         a[i]=rand()%100;
         cout<<a[i]<<endl;
+        plik<<a[i]<<endl;
     }                           //wprowadzanie elementow tablicy a[N] (liczby pseudolosowe)
 
     for (i=0; i<N-1;i++)
@@ -23,7 +28,8 @@ void wyszukiwanie_podciagow_malejacych()
         {
         liczba++;
         {
-            cout<<"["<<a[i]<<","<<a[i+1]<<"], ";        // w przypadku gdy element tablicy jest mnniejszy od poprzedniego wypisujemy oba elementy na ekranie np dla 5,4,3,2 dla i=0 wypisuje nam [5,4]
+            cout<<"["<<a[i]<<","<<a[i+1]<<"], ";            // w przypadku gdy element tablicy jest mnniejszy od poprzedniego wypisujemy oba elementy na ekranie np dla 5,4,3,2 dla i=0 wypisuje nam [5,4]
+            plik<<"["<<a[i]<<","<<a[i+1]<<"], ";
             do                                          // pêtla pozwala nam sprawdzac kolejne elementy tablicy,dla i=0 np, dla (5,4,3,2) czy 5>3 czy 5>2 itd.
             {
                 if (i+j<N-1 || i+j==N-1)                   //warunek konieczny dla poprawnego dzialania programu ten warunek zapobiega dla np. N=6 sprawdzania wartosci czy a[8]>a[9]
@@ -36,11 +42,14 @@ void wyszukiwanie_podciagow_malejacych()
                             if (l==i)                   // dla l=i czyli gdy l ma wartosc najmniejsz¹ a element ciagu wartosc najwieksza zacznij wypisywanie od znaku ,,["
                             {
                                 cout<<"[";
+                                plik<<"[";
                             }
-                            cout<<a[l]<<",";            //wypisanie pozdbiorow malejacych
+                            cout<<a[l]<<",";        //wypisanie pozdbiorow malejacych
+                            plik<<a[l]<<",";
                             if (l==j+i)                 //gdy l ma wartosc najwieksza czyli element ciagu a[l] ma wartosc najmniejsza, zakoñcz wypisywanie znakiem ,,]"
                             {
                                 cout<<"], ";
+                                plik<<"], ";
                             }
                         }
                             if (i+j==N-1 )              // je¿eli zosta³ wypisany ostatni element ciagu np dla 5,4,3,2,1 zosta³a wypisana 1, zakoñcz pêtle.
@@ -66,10 +75,12 @@ void wyszukiwanie_podciagow_malejacych()
         }
     }
     cout<<endl<<"Liczba wszystkich podciagow malejacych to: "<<liczba; //wypisz ile jest podciagow malejacych
+    plik<<endl<<"Liczba wszystkich podciagow malejacych to: "<<liczba<<endl; //wpisanie do pliku tekstowego
+    plik.close();
 }
 
 
 int main()
 {
-    wyszukiwanie_podciagow_malejacych();
+    wyszukiwanie_podciagow_malejacych(); //wywoływanie funkcji wyszukiwanie_podciagow_malejacych()
 }
