@@ -2,70 +2,74 @@
 #include <stdlib.h>
 #include <time.h>
 using namespace std;
-int warN(int x)
+
+void wyszukiwanie_podciagow_malejacych()
 {
-    return x-1;
+    int i, j=2, N, t=1, l, liczba;
+    srand(time(NULL));
+    cout<<"Podaj ilosc elementow tablicy:";
+    cin>>N;
+    int a[N];
+    for(i=0;i<N;i++)
+    {
+        cout<<"a["<<i+1<<"]: ";
+        a[i]=rand()%100;
+        cout<<a[i]<<endl;
+    }                           //wprowadzanie elementow tablicy a[N] (liczby pseudolosowe)
+
+    for (i=0; i<N-1;i++)
+    {
+        if (a[i]>a[i+1])
+        {
+        liczba++;
+        {
+            cout<<"["<<a[i]<<","<<a[i+1]<<"], ";        // w przypadku gdy element tablicy jest mnniejszy od poprzedniego wypisujemy oba elementy na ekranie np dla 5,4,3,2 dla i=0 wypisuje nam [5,4]
+            do                                          // pêtla pozwala nam sprawdzac kolejne elementy tablicy,dla i=0 np, dla (5,4,3,2) czy 5>3 czy 5>2 itd.
+            {
+                if (i+j<N-1 || i+j==N-1)                   //warunek konieczny dla poprawnego dzialania programu ten warunek zapobiega dla np. N=6 sprawdzania wartosci czy a[8]>a[9]
+                {
+                    if (a[i]>a[i+j]&& a[i+j-1]>a[j+i]) // warunek pozwala nam sprawdzac kolejne elementy tablicy, aby tworzyc podciagi waznym elementem dla np 5,4,3,2 jest nie tylko czy 5>3 ale tez czy 4>3
+                    {
+                    liczba++;                           // implementujemy wartosc liczby, czyli naszego licznika podzbiorów malej¹cych
+                    for (l=i; l<j+i+1; l++)             // wypisujemy podzbiory malejace
+                        {
+                            if (l==i)                   // dla l=i czyli gdy l ma wartosc najmniejsz¹ a element ciagu wartosc najwieksza zacznij wypisywanie od znaku ,,["
+                            {
+                                cout<<"[";
+                            }
+                            cout<<a[l]<<",";            //wypisanie pozdbiorow malejacych
+                            if (l==j+i)                 //gdy l ma wartosc najwieksza czyli element ciagu a[l] ma wartosc najmniejsza, zakoñcz wypisywanie znakiem ,,]"
+                            {
+                                cout<<"], ";
+                            }
+                        }
+                            if (i+j==N-1 )              // je¿eli zosta³ wypisany ostatni element ciagu np dla 5,4,3,2,1 zosta³a wypisana 1, zakoñcz pêtle.
+                            {
+                                t=-1;                   //podstawienie t=-1 konczy dzialanie pêtli
+                            }
+                    }
+                    else                                //jezeli w naszym programie element o indeksie o 2 wiekszym od naszego np a[0] nie jest od niego wiekszy przerwij sprawdzanie kolejnych elementów
+                    {
+                        t=-1;
+                    }
+                }
+                else
+                {
+                    break;                          // konczy dzialanie progamu
+                }
+            j++;                                    // j pozwala przesuwaæ siê po kolejnych elementach ciagu
+            }while (t>0);
+            j=2;                                    // podstawiam j=2 i t=1 dla poprawnego dzia³ania programu
+            t=1;
+
+        }
+        }
+    }
+    cout<<endl<<"Liczba wszystkich podciagow malejacych to: "<<liczba; //wypisz ile jest podciagow malejacych
 }
+
 
 int main()
 {
-int i, j=2, N, t=1, l, liczba;
-srand(time(NULL));
-cout<<"Podaj ilosc elementow tablicy:";
-cin>>N;
-int a[N];
-for(i=0;i<warN(N)+1;i++)
-{
-    cout<<"a["<<i+1<<"]: ";
-    a[i]=rand()%100;
-    cout<<a[i]<<endl;
-}                           //wprowadzanie elementow tablicy a[N] (liczby pseudolosowe)
-for (i=0; i<warN(N);i++)
-{
-    if (a[i]>a[i+1])
-    {
-        cout<<"["<<a[i]<<","<<a[i+1]<<"], ";        // w przypadku gdy element tablicy jest mnniejszy od poprzedniego wypisujemy oba elementy na ekranie np dla 5,4,3,2 dla i=0 wypisuje nam [5,4]
-        do                                          // pêtla pozwala nam sprawdzac kolejne elementy tablicy,dla i=0 np, dla (5,4,3,2) czy 5>3 czy 5>2 itd.
-        {
-            if (i+j<N-1 || i+j==N-1)                   //warunek konieczny dla poprawnego dzialania programu ten warunek zapobiega dla np. N=6 sprawdzania wartosci czy a[8]>a[9]
-            {
-                if (a[i]>a[i+j]&& a[i+j-1]>a[j+i]) // warunek pozwala nam sprawdzac kolejne elementy tablicy, aby tworzyc podciagi waznym elementem dla np 5,4,3,2 jest nie tylko czy 5>3 ale tez czy 4>3
-                {
-                liczba++;                           // implementujemy wartosc liczby, czyli naszego licznika podzbiorów malej¹cych
-                for (l=i; l<j+i+1; l++)             // wypisujemy podzbiory malejace
-                    {
-                        if (l==i)                   // dla l=i czyli gdy l ma wartosc najmniejsz¹ a element ciagu wartosc najwieksza zacznij wypisywanie od znaku ,,["
-                        {
-                            cout<<"[";
-                        }
-                        cout<<a[l]<<",";            //wypisanie pozdbiorow malejacych
-                        if (l==j+i)                 //gdy l ma wartosc najwieksza czyli element ciagu a[l] ma wartosc najmniejsza, zakoñcz wypisywanie znakiem ,,]"
-                        {
-                            cout<<"], ";
-                        }
-                    }
-                        if (i+j==N-1 )              // je¿eli zosta³ wypisany ostatni element ciagu np dla 5,4,3,2,1 zosta³a wypisana 1, zakoñcz pêtle.
-                        {
-                            t=-1;                   //podstawienie t=-1 konczy dzialanie pêtli
-                        }
-                }
-                else                                //jezeli w naszym programie element o indeksie o 2 wiekszym od naszego np a[0] nie jest od niego wiekszy przerwij sprawdzanie kolejnych elementów
-                {
-                    t=-1;
-                }
-            }
-            else
-            {
-                break;                          // konczy dzialanie progamu
-            }
-        j++;                                    // j pozwala przesuwaæ siê po kolejnych elementach ciagu
-        }while (t>0);
-        j=2;                                    // podstawiam j=2 i t=1 dla poprawnego dzia³ania programu
-        t=1;
-
-    }
+    wyszukiwanie_podciagow_malejacych();
 }
-cout<<endl<<"Liczba wszystkich podciagow malejacych to: "<<liczba; //wypisz ile jest podciagow malejacych
-return 0;
-}
-
