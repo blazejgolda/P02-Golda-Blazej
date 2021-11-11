@@ -1,52 +1,52 @@
-#include <iostream>             // dodanie bibliotek dla poprawnego działania programu
-#include <stdlib.h>           
-#include <time.h>                   
+#include <iostream> // dodanie bibliotek dla poprawnego dzialania programu
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
+int warN(int x)
+{
+    return x-1;
+}
+
 int main()
 {
-int i;
-int j=2;
-int N;
-int t=1;
-int l;
-int liczba;
+int i, j=2, N, t=1, l, liczba;
 srand(time(NULL));
 cout<<"Podaj ilosc elementow tablicy:";
 cin>>N;
 int a[N];
-for(i=0;i<N;i++)
-{                                                               
+for(i=0;i<warN(N)+1;i++)
+{
     cout<<"a["<<i+1<<"]: ";
     a[i]=rand()%100;
     cout<<a[i]<<endl;
 }                           //wprowadzanie elementow tablicy a[N] (liczby pseudolosowe)
-for (i=0; i<N-1;i++)
+for (i=0; i<warN(N);i++)
 {
-    if (a[i]>a[i+1])          
+    if (a[i]>a[i+1])
     {
         cout<<"["<<a[i]<<","<<a[i+1]<<"], ";        // w przypadku gdy element tablicy jest mnniejszy od poprzedniego wypisujemy oba elementy na ekranie np dla 5,4,3,2 dla i=0 wypisuje nam [5,4]
-        do                                          // pętla pozwala nam sprawdzac kolejne elementy tablicy,dla i=0 np, dla (5,4,3,2) czy 5>3 czy 5>2 itd.
+        do                                          // pêtla pozwala nam sprawdzac kolejne elementy tablicy,dla i=0 np, dla (5,4,3,2) czy 5>3 czy 5>2 itd.
         {
             if (i+j<N-1 || i+j==N-1)                   //warunek konieczny dla poprawnego dzialania programu ten warunek zapobiega dla np. N=6 sprawdzania wartosci czy a[8]>a[9]
             {
-                if (a[i]>a[i+j]&& a[i+j-1]>a[j+i]) // warunek pozwala nam sprawdzac kolejne elementy tablicy, oby tworzyc podciagi waznym elementem dla np 5,4,3,2 jest nie tylko czy 5>3 ale czy 4>3
+                if (a[i]>a[i+j]&& a[i+j-1]>a[j+i]) // warunek pozwala nam sprawdzac kolejne elementy tablicy, aby tworzyc podciagi waznym elementem dla np 5,4,3,2 jest nie tylko czy 5>3 ale tez czy 4>3
                 {
-                liczba++;                           // implementujemy wartosc liczby, czyli naszego licznika podzbiorów malejących
+                liczba++;                           // implementujemy wartosc liczby, czyli naszego licznika podzbiorów malej¹cych
                 for (l=i; l<j+i+1; l++)             // wypisujemy podzbiory malejace
                     {
-                        if (l==i)                   // dla l=i czyli gdy l ma wartosc najmniejszą a element ciagu wartosc najwieksza zacznij wypisywanie od znaku ,,["
+                        if (l==i)                   // dla l=i czyli gdy l ma wartosc najmniejsz¹ a element ciagu wartosc najwieksza zacznij wypisywanie od znaku ,,["
                         {
                             cout<<"[";
                         }
                         cout<<a[l]<<",";            //wypisanie pozdbiorow malejacych
-                        if (l==j+i)                 //gdy l ma wartosc najwieksza czyli element ciagu a[l] ma wartosc najmniejsza, zakończ wypisywanie znakiem ,,]"
+                        if (l==j+i)                 //gdy l ma wartosc najwieksza czyli element ciagu a[l] ma wartosc najmniejsza, zakoñcz wypisywanie znakiem ,,]"
                         {
                             cout<<"], ";
                         }
                     }
-                        if (i+j==N-1 )              // jeżeli został wypisany ostatni element ciagu np dla 5,4,3,2,1 została wypisana 1, zakończ pętle.
+                        if (i+j==N-1 )              // je¿eli zosta³ wypisany ostatni element ciagu np dla 5,4,3,2,1 zosta³a wypisana 1, zakoñcz pêtle.
                         {
-                            t=-1;                   //podstawienie t=-1 konczy dzialanie pętli
+                            t=-1;                   //podstawienie t=-1 konczy dzialanie pêtli
                         }
                 }
                 else                                //jezeli w naszym programie element o indeksie o 2 wiekszym od naszego np a[0] nie jest od niego wiekszy przerwij sprawdzanie kolejnych elementów
@@ -58,9 +58,9 @@ for (i=0; i<N-1;i++)
             {
                 break;                          // konczy dzialanie progamu
             }
-        j++;                                    // j pozwala przesuwać się po kolejnych elementach ciagu
+        j++;                                    // j pozwala przesuwaæ siê po kolejnych elementach ciagu
         }while (t>0);
-        j=2;                                    // podstawiam j=2 i t=1 dla poprawnego działania programu
+        j=2;                                    // podstawiam j=2 i t=1 dla poprawnego dzia³ania programu
         t=1;
 
     }
@@ -68,3 +68,4 @@ for (i=0; i<N-1;i++)
 cout<<endl<<"Liczba wszystkich podciagow malejacych to: "<<liczba; //wypisz ile jest podciagow malejacych
 return 0;
 }
+
