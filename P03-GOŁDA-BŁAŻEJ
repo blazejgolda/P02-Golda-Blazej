@@ -1,0 +1,285 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+struct slistEl //tworzymy element listy
+{
+    slistEl* next;
+    int v;
+};
+// 1)
+void podpunkt1(int n, slistEl* p, slistEl** A)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        cout << "A [ " << i << " ]: ";
+        p = A[i];
+        while (p) //dopóki p!=NULL wykonuj
+        {
+            cout << p->v << " "; //wyswietl wartosc adresu p
+            p = p->next;    //p przyjmuje adres kolejnego elementu tablicy A[i]
+        }
+        cout << endl;
+    }
+}
+// 2)
+void podpunkt2(slistEl* p, slistEl* b, slistEl** A, int n, int* Z)
+{
+    int f = 0;
+    int l;
+    int s;
+    s = n;
+    int e = 1;
+    int j = 1;
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        b = A[0];
+        if (i == 0) //waruenk konieczny aby mozliwe bylo sprawdzenie kazdej mozliwosci
+        {
+            b = A[1];
+        }
+        if (i == 1)
+        {
+            b = A[0];
+        }
+        while (p) //jezeli sprawdzony zostal kazdy element A[i]
+        {
+            while (j < n)  //dopoki indeks sprawdzanej tablicy jest mniejszy od liczby wierzcholkow
+            {
+                while (b) //dopoki adres b!=NULL
+                {
+                    if (p->v == b->v)   //jezeli wartosc pod adresem p jest rowny wartosci pod adresem b
+                    {
+                        e++;
+                        if (e == n - 1)
+                        {
+                            cout << "Sasiadem kazdego wierzcholka jest: " << endl << "A[" << p->v << "]";
+                        }
+                        Z[f] = p->v;
+                        f++;
+                        i++;
+                    }
+                    b = b->next;
+                }
+                //jezeli sprawdzone zostaly elementy tablicy A[j]
+                j++;
+                if (j == i)
+                {
+                    j++;
+                }
+                b = A[j];
+            }
+            b = A[0];
+            if (i == 0)
+            {
+                b = A[1];
+            }
+            if (i == 1)
+            {
+                b = A[0];
+            }
+            j = 1;
+            e = 1;
+            p = p->next; //jezeli porownany zostal kazdy element listy z elementem p->v
+            if (p)
+            {
+                for (l = 0; l < s; l++) //sprawdzam czy dany element nie zostal wczesniej uznany jako sasiad i wyswietlony
+                {
+                    if (p->v == Z[l])
+                    {
+                        p = p->next;
+                        s = l;
+                    }
+                }
+            }
+            s = n;
+        //jezeli sprawdzony zostal kazdy element
+        }
+    }
+    cout << endl;
+}
+// 3)
+void podpunkt3(int* T, slistEl* p, int n, slistEl** A)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        while (p)
+        {
+            T[i]++;
+            p = p->next;
+        }
+    }
+    cout << "Stopien wychodzacy wierzcholka: " << endl;
+    for (i = 0; i < n; i++)
+    {
+        cout << "A[" << i << "]: " << T[i] << endl;
+    }
+}
+// 4)
+void podpunkt4(int n, slistEl** A, slistEl* p, int* Y)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        while (p)
+        {
+            Y[p->v]++;  //jezeli A[i] ma wartosc rowna indeksowi tzn. +1 stopni wchodzacych Y[i]
+            p = p->next;
+        }
+    }
+    cout << "Stopien wchodzacy wierzcholka: " << endl;
+    for (i = 0; i < n; i++)
+    {
+        cout << "A[" << i << "]: " << Y[i] << endl;
+    }
+}
+// 5)
+bool izo(int i, int* T, int* Y)
+{
+    if ((Y[i] == 0) && (T[i] == 0)) //jezeli stopnie wchodzace sa rowne stopni wychodzacemu
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+// 5)
+void podpunkt5(int* T, int* Y, int n)
+{
+    int i;
+    cout << "Wierzcholkiem izolowanym jest: " << endl;
+    for (i = 0; i < n; i++)
+    {
+        if (izo(i, T, Y))
+        {
+            cout << "A[" << i << "]" << endl;
+        }
+    }
+}
+// 6)
+bool petle(int i, slistEl* p)
+{
+    if (p->v == i)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+// 6)
+void podpunkt6(int n, slistEl* p, slistEl** A)
+{
+    int i;
+    cout << "Wierzcholek z petla: " << endl;
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        while (p)
+        {
+            if (petle(i, p))
+            {
+                cout << "A[" << i << "]" << endl;
+            }
+            p = p->next;
+        }
+    }
+}
+// 7)
+void podpunkt7(int n, slistEl* p, slistEl** A, slistEl* b)
+{
+    cout << "Krawedz dwukierunkowa: " << endl;
+    int g = -1;
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        while (p)
+        {
+            if (i < p->v)   //dla przypadkow gdy, A[4]=0, bo jezeli dany indeks mialby krawedz dwukierunkowa sprawdzilibysmy to dla A[0]=4, zaczynamy od i=0
+            {
+                b = A[p->v];
+                while (b && g != 1)
+                {
+                    if (b->v == i)
+                    {
+                        cout << "A[" << i << "]: " << p->v << endl;
+                        cout << "A[" << p->v << "]: " << i << endl;
+                        g = 1;
+                    }
+                    b = b->next;
+                }
+                g = -1;
+            }
+            p = p->next;
+        }
+    }
+}
+
+int main()
+{
+    int n, m, i, v1, v2;
+    int c = 0;
+    int t = 0;
+    int g = -1;
+    cin >> n >> m;
+    slistEl** A;
+    slistEl* p, * r, * b;
+    p = NULL;
+    b = NULL;
+    A = new slistEl * [n];
+    int* T = new int[n];
+    int* L = new int[n - 1];
+    int* Y = new int[n];
+    int* Z = new int[n];
+    for (i = 0; i < n; i++)
+    {
+        A[i] = NULL;
+        L[i] = NULL;
+        T[i] = 0;
+        Y[i] = 0;
+    }
+    for (i = 0; i < m; i++)
+    {
+        cin >> v1 >> v2;
+        p = new slistEl;
+        p->v = v2;
+        p->next = A[v1];
+        A[v1] = p;
+    }
+    // 1)
+    podpunkt1(n, p, A);
+    // 2)
+    podpunkt2(p, b, A, n, Z);
+    // 3)
+    podpunkt3(T, p, n, A);
+    // 4)
+    podpunkt4(n, A, p, Y);
+    // 5)
+    podpunkt5(T, Y, n);
+    // 6)
+    podpunkt6(n, p, A);
+    // 7)
+    podpunkt7(n, p, A, b);
+    for (i = 0; i < n; i++)
+    {
+        p = A[i];
+        while (p)
+        {
+            r = p;
+            p = p->next;
+            delete r;
+        }
+    }
+    delete[] A, T, Y, Z;
+    cout << endl;
+    return 0;
+}
